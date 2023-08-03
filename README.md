@@ -50,6 +50,7 @@ wget https://raw.githubusercontent.com/billythekidz/xshok-proxmox/master/lvm-2-z
 Assumptions: Proxmox installed, SSD raid1 partitions mounted as /xshok/zfs-slog and /xshok/zfs-cache, 1+ unused hdd which will be made into a zfspool
 
 * Connect via ssh/terminal to the new Proxmox system running on your server and run the follow
+  
 ## Create ZFS from unused devices (createzfs.sh)
 
 **NOTE: WILL  DESTROY ALL DATA ON SPECIFIED DEVICES**
@@ -57,6 +58,32 @@ Assumptions: Proxmox installed, SSD raid1 partitions mounted as /xshok/zfs-slog 
 wget https://raw.githubusercontent.com/billythekidz/xshok-proxmox/master/createzfs.sh -c -O createzfs.sh && chmod +x createzfs.sh
 ./createzfs.sh poolname /dev/device1 /dev/device2
 ```
+
+## CREATES A ROUTED vmbr0 AND NAT vmbr1 NETWORK CONFIGURATION FOR PROXMOX (network-configure.sh) **run once**
+Autodetects the correct settings (interface, gatewat, netmask, etc)
+Supports IPv4 and IPv6, Private Network uses 10.10.10.1/24
+Also installs and properly configures the isc-dhcp-server to allow for DHCP on the vmbr1 (NAT)
+ROUTED (vmbr0):
+   All traffic is routed via the main IP address and uses the MAC address of the physical interface.
+   VM's can have multiple IP addresses and they do NOT require a MAC to be set for the IP via service provider
+
+ NAT (vmbr1):
+   Allows a VM to have internet connectivity without requiring its own IP address
+   Assignes 10.10.10.100 - 10.10.10.200 via DHCP
+
+ Public IP's can be assigned via DHCP, adding a host define to the /etc/dhcp/hosts.public file
+
+ Tested on OVH and Hetzner based servers
+
+ALSO CREATES A NAT Private Network as vmbr1
+
+ NOTE: WILL OVERWRITE /etc/network/interfaces
+ A backup will be created as /etc/network/interfaces.timestamp
+```
+wget https://raw.githubusercontent.com/billythekidz/xshok-proxmox/master/network-configure.sh -c -O network-configure.sh && chmod +x network-configure.sh
+./network-configure.sh && rm network-configure.sh
+```
+
 ## Create ZFS cache and slog from /xshok/zfs-cache and /xshok/zfs-slog partitions and adds them to a zpool (xshok_slog_cache-2-zfs.sh) *optional*
 
 **NOTE: WILL  DESTROY ALL DATA ON SPECIFIED PARTITIONS**
@@ -121,31 +148,6 @@ Creates a zfs pool from specified devices
 ```
 wget https://raw.githubusercontent.com/billythekidz/xshok-proxmox/master/xshok_slog_cache-2-zfs.sh -c -O xshok_slog_cache-2-zfs.sh && chmod +x xshok_slog_cache-2-zfs.sh
 ./xshok_slog_cache-2-zfs.sh poolname
-```
-
-## CREATES A ROUTED vmbr0 AND NAT vmbr1 NETWORK CONFIGURATION FOR PROXMOX (network-configure.sh) **run once**
-Autodetects the correct settings (interface, gatewat, netmask, etc)
-Supports IPv4 and IPv6, Private Network uses 10.10.10.1/24
-Also installs and properly configures the isc-dhcp-server to allow for DHCP on the vmbr1 (NAT)
-ROUTED (vmbr0):
-   All traffic is routed via the main IP address and uses the MAC address of the physical interface.
-   VM's can have multiple IP addresses and they do NOT require a MAC to be set for the IP via service provider
-
- NAT (vmbr1):
-   Allows a VM to have internet connectivity without requiring its own IP address
-   Assignes 10.10.10.100 - 10.10.10.200 via DHCP
-
- Public IP's can be assigned via DHCP, adding a host define to the /etc/dhcp/hosts.public file
-
- Tested on OVH and Hetzner based servers
-
-ALSO CREATES A NAT Private Network as vmbr1
-
- NOTE: WILL OVERWRITE /etc/network/interfaces
- A backup will be created as /etc/network/interfaces.timestamp
-```
-wget https://raw.githubusercontent.com/billythekidz/xshok-proxmox/master/network-configure.sh -c -O network-configure.sh && chmod +x network-configure.sh
-./network-configure.sh && rm network-configure.sh
 ```
 
 ##  Creates default routes to allow for extra ip ranges to be used (network-addiprange.sh) *optional*
