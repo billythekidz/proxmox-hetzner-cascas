@@ -80,7 +80,7 @@ ALSO CREATES A NAT Private Network as vmbr1
  NOTE: WILL OVERWRITE /etc/network/interfaces
  A backup will be created as /etc/network/interfaces.timestamp
 ```
-wget https://raw.githubusercontent.com/extremeshok/xshok-proxmox/master/network-configure.sh -c -O network-configure.sh && chmod +x network-configure.sh
+wget https://raw.githubusercontent.com/extremeshok/xshok-proxmox/master/networking/network-configure.sh -c -O network-configure.sh && chmod +x network-configure.sh
 ./network-configure.sh && rm network-configure.sh
 ```
 
