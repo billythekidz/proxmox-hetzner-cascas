@@ -87,6 +87,7 @@ else
   MY_RAID_ENABLE="no"
   MY_RAID_SLAVE=""
 fi
+
 #test for possible raid10, using 4 devices of equal size
 if [ "$MY_RAID_ENABLE" == "yes" ]; then
   if [[ $(awk '/sda$/{printf "%i", $(NF-1) / 1000 / 1000}' /proc/partitions) -eq $(awk '/sdb$/{printf "%i", $(NF-1) / 1000 / 1000}' /proc/partitions) ]] && [[ $(awk '/sda$/{printf "%i", $(NF-1) / 1000 / 1000}' /proc/partitions) -eq $(awk '/sdc$/{printf "%i", $(NF-1) / 1000 / 1000}' /proc/partitions) ]] && [[ $(awk '/sda$/{printf "%i", $(NF-1) / 1000 / 1000}' /proc/partitions) -eq $(awk '/sdd$/{printf "%i", $(NF-1) / 1000 / 1000}' /proc/partitions) ]] ; then
@@ -95,6 +96,11 @@ if [ "$MY_RAID_ENABLE" == "yes" ]; then
   else
     MY_RAID_LEVEL="1"
   fi
+#hard code config
+  MY_RAID_ENABLE="no"
+  MY_RAID_SLAVE=""
+  MY_RAID_LEVEL="0"
+#print config
   echo "RAID ENABLED"
   echo "RAID Devices: sda${MY_RAID_SLAVE}"
   echo "Set RAID level to ${MY_RAID_LEVEL}"
