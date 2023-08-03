@@ -39,7 +39,7 @@ wget https://raw.githubusercontent.com/billythekidz/proxmox-hetzner-cascas/maste
 * Connect via ssh/terminal to the new Proxmox system running on your server and run the following
 ## LVM to ZFS
 ````
-wget https://raw.githubusercontent.com/extremeshok/xshok-proxmox/master/lvm-2-zfs.sh -c -O lvm-2-zfs.sh  && chmod +x lvm-2-zfs.sh
+wget https://raw.githubusercontent.com/extremeshok/xshok-proxmox/master/zfs/lvm-2-zfs.sh -c -O lvm-2-zfs.sh  && chmod +x lvm-2-zfs.sh
  ./lvm-2-zfs.sh && rm lvm-2-zfs.sh
 ````
 * Reboot
