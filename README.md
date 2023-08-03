@@ -26,13 +26,13 @@ Recommeneded partitioning scheme:
 
 ## For server with SATA Disk
 ````
-wget https://raw.githubusercontent.com/billythekidz/proxmox-hetzner/master/install-hetzner-sata.sh -c -O install-hetzner.sh && chmod +x install-hetzner.sh
+wget https://raw.githubusercontent.com/billythekidz/proxmox-hetzner-cascas/master/install-hetzner-sata.sh -c -O install-hetzner.sh && chmod +x install-hetzner.sh
 ./install-hetzner.sh "PVE Hostname"
 ````
 
 ## For server with NVME Disk
 ````
-wget https://raw.githubusercontent.com/billythekidz/proxmox-hetzner/master/install-hetzner-nvme.sh -c -O install-hetzner.sh && chmod +x install-hetzner.sh
+wget https://raw.githubusercontent.com/billythekidz/proxmox-hetzner-cascas/master/install-hetzner-nvme.sh -c -O install-hetzner.sh && chmod +x install-hetzner.sh
 ./install-hetzner.sh "PVE Hostname"
 ````
 * Reboot
