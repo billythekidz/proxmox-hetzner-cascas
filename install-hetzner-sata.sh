@@ -97,9 +97,9 @@ if [ "$MY_RAID_ENABLE" == "yes" ]; then
     MY_RAID_LEVEL="1"
   fi
 #hard code config
-  MY_RAID_ENABLE="no"
-  MY_RAID_SLAVE=""
-  MY_RAID_LEVEL="0"
+  # MY_RAID_ENABLE="no"
+  # MY_RAID_SLAVE=""
+  # MY_RAID_LEVEL="0"
 #print config
   echo "RAID ENABLED"
   echo "RAID Devices: sda${MY_RAID_SLAVE}"
